@@ -1,4 +1,4 @@
-compile: fserver server client pipe
+compile: server client pipe fserver
 clean:
 	rm fserver
 	rm server
