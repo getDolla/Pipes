@@ -23,7 +23,7 @@ int server_handshake(int * from_client) {
   printf("[SERVER] recieved: %s\n", buffer);
 
   //remove pipe
-  unlink("luigi");
+  unlink("luigi");//delete a name and possibly the file it refers to
 
   //connect to client pipe
   int clientPipe = open(buffer, O_WRONLY);
@@ -62,7 +62,7 @@ int client_handshake(int * to_server ) {
   printf("[CLIENT] recieved: %s\n",  message);
 
   //remove pipe
-  unlink(clientPipe);
+  unlink(clientPipe);//delete a name and possibly the file it refers to
 
   //write confirmation message to server
   strcpy(message, "Word, nice to meet you too!");
