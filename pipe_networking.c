@@ -11,6 +11,7 @@ int server_handshake(int * from_client) {
   // make the named pipe
   mkfifo("luigi",0644);
   printf("[SERVER] WPK created\n");
+
   // open (connect) to it
   printf("[SERVER] connection attempt\n");
   *from_client = open("luigi",O_RDONLY);
@@ -53,8 +54,19 @@ int client_handshake(int * to_server ) {
   write(*to_server, clientPipe, strlen(clientPipe));
   printf("[CLIENT] sent message\n" );
 
-  //connect to server fifo
-  int 
+  //checks connection to server fifo
+  int serverFD = open(clientPipe, O_RDONLY);
+  char message[512];
+  read(serverFD, message, sizeof(message));
+  printf("[CLIENT] recieved: %s\n",  message);
 
-  return 0;
+  //remove pipe
+  execlp("rm", "rm", "-f", clientPipe, NULL);
+
+  //write confirmation message to server
+  strcpy(message, "Word, nice to meet you too!");
+  write(*to_server, message, strlen(message));
+  printf("[CLIENT] sent message\n" );
+
+  return serverFD;
 }
