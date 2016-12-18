@@ -19,14 +19,14 @@ int server_handshake(int * from_client) {
   //attempt to read
   char buffer[MESSAGE_BUFFER_SIZE];//gets client fifo name
   read(*from_client, buffer, sizeof(buffer));
-  printf("[SERVER] recieved: %s\n", );
+  printf("[SERVER] recieved: %s\n", buffer);
 
   //remove pipe
   execlp("rm", "rm", "-f", "luigi", NULL);
 
   //connect to client pipe
   int clientPipe = open(buffer, O_WRONLY);
-  printf("[SERVER] connected to client FIFO\n", );
+  printf("[SERVER] connected to client FIFO\n");
 
   //write to client
   char * message = "Hello, client!";
