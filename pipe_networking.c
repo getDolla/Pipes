@@ -17,7 +17,7 @@ int server_handshake(int * from_client) {
   *from_client = open("luigi",O_RDONLY);
 
   //attempt to read
-  char buffer[MESSAGE_BUFFER_SIZE];//gets client fifo name
+  char buffer[MESSAGE_BUFFER_SIZE] = { 0 };//gets client fifo name
   read(*from_client, buffer, sizeof(buffer));
   printf("[SERVER] recieved: %s\n", buffer);
 
@@ -41,7 +41,7 @@ int server_handshake(int * from_client) {
 
 int client_handshake(int * to_server ) {
   // make the named pipe
-  char clientPipe[512];
+  char clientPipe[512]= { 0 };;
   sprintf(clientPipe, "%d", getpid());
   mkfifo(clientPipe,0644);
   printf("[CLIENT] fifo created created: %s\n", clientPipe );
@@ -56,7 +56,7 @@ int client_handshake(int * to_server ) {
 
   //checks connection to server fifo
   int serverFD = open(clientPipe, O_RDONLY);
-  char message[MESSAGE_BUFFER_SIZE];
+  char message[MESSAGE_BUFFER_SIZE] = { 0 };
   read(serverFD, message, sizeof(message));
   printf("[CLIENT] recieved: %s\n",  message);
 
