@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <string.h>
 
 #include "pipe_networking.h"
 
@@ -41,7 +42,7 @@ int server_handshake(int * from_client) {
 
 int client_handshake(int * to_server ) {
   // make the named pipe
-  char clientPipe[512]= { 0 };;
+  char clientPipe[512]= { 0 };
   sprintf(clientPipe, "%d", getpid());
   mkfifo(clientPipe,0644);
   printf("[CLIENT] fifo created created: %s\n", clientPipe );
