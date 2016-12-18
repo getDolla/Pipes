@@ -17,7 +17,7 @@ int server_handshake(int * from_client) {
   *from_client = open("luigi",O_RDONLY);
 
   //attempt to read
-  char buffer[512];//gets client fifo name
+  char buffer[MESSAGE_BUFFER_SIZE];//gets client fifo name
   read(*from_client, buffer, sizeof(buffer));
   printf("[SERVER] recieved: %s\n", );
 
@@ -56,7 +56,7 @@ int client_handshake(int * to_server ) {
 
   //checks connection to server fifo
   int serverFD = open(clientPipe, O_RDONLY);
-  char message[512];
+  char message[MESSAGE_BUFFER_SIZE];
   read(serverFD, message, sizeof(message));
   printf("[CLIENT] recieved: %s\n",  message);
 
